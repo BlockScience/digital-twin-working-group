@@ -37,26 +37,23 @@ class DigitalTwin(ABC):
     def load_data_prior(self):
         pass
     
-    @abstractmethod
     def compute_input_data(self):
-        pass
+        self.input_data_raw = self.data_pipeline.compute_input_data(self.historical_data)
+        self.input_data = self.data_pipeline.format_input_data(self.input_data_raw)
     
-    @abstractmethod
     def run_backtest(self):
-        pass
+        backtest_data = self.backtest_model.run_model(self.input_data)
+        backtest_data = self.backtest_model.post_processing(backtest_data)
+        self.backtest_data = backtest_data
     
-    @abstractmethod
     def fit_stochastic_fit(self):
-        pass
+        self.stochastic_fit_params = self.stochastic_fit.fit_data(self.input_data)
     
-    @abstractmethod
     def extrapolate_signals(self):
-        pass
+        self.signals = self.signal_extrapolation.extrapolate_signals(self.stochastic_fit_params, self.extrapolation_epochs)
     
-    @abstractmethod
     def run_extrapolation(self):
-        pass
+        extrapolation_data = self.extrapolation_model.run_model(self.signals, self.historical_data)
+        extrapolation_data = self.extrapolation_model.post_processing(extrapolation_data)
+        self.extrapolation_data = extrapolation_data
     
-    @abstractmethod
-    def graph_backtest_difference(self):
-        pass
