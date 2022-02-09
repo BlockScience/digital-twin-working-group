@@ -8,3 +8,7 @@ class DataPipeline(ABC):
     @abstractmethod
     def compute_input_data(self, data):
         pass
+    
+    @abstractmethod
+    def format_input_data(self, data):
+        pass
