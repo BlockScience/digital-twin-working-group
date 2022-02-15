@@ -16,6 +16,4 @@ Genesis state for state variables
 initial_state = {
     'basket': asset.Asset(p_basket, r_basket),
     'index': asset.Asset(p_index, r_index),
-    # TODO: var for arb trader (name, type, value?)
-    # TODO: var for momentum trader (name, type, value?)
 }
