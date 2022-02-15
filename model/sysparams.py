@@ -1,4 +1,8 @@
 """ mu param for basket Normal RV """
+from model.parts.traders.arbitrage import Arbitrageur
+from model.parts.traders.momentum import Momentum
+
+
 mu_basket: float = .1
 """ sigma param for basket Normal RV """
 sigma_basket: float = .05
@@ -14,6 +18,8 @@ theta_arb: float = 10
 lookback: int = 5
 """ theta param for momentum trader """
 theta_momentum: float = .1
+""" price impact of momentum trader """
+impact = .005
 
 """
 Model paramaters
@@ -24,7 +30,6 @@ params = {
     'lambda_index': lambda_index,
     'mu_index': mu_index,
     'sigma_index': sigma_index,
-    'theta_arb': theta_arb,
-    'lookback': lookback,
-    'theta_momentum': theta_momentum
+    'arb': Arbitrageur(theta_arb),
+    'momentum': Momentum(lookback, mu_basket, theta_momentum, impact)
 }
