@@ -42,5 +42,3 @@ partial_state_update_block = [
         }
     }
 ]
-
-]
