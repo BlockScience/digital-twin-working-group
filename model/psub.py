@@ -8,10 +8,11 @@ from .parts.traders.arbitrage import p_arb_trade, s_arb_trade
 from .parts.assets.asset import s_basket_asset, s_index_asset
 
 """
-Partial state update blocks
+Partial state update blocks:
 
-The PSUBs are configured here by assigning the policies and state variables
-to be calculated and updated in each block.
+1. Rates are randomly drawn to generate prices
+2. The arbitraguer decides whether to trade or not
+3. The momentum trader decides whether to buy or sell
 """
 
 partial_state_update_block = [
