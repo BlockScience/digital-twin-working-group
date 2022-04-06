@@ -32,7 +32,6 @@ def run(exp) -> pd.DataFrame:
     # execute in local mode
     exec_mode = ExecutionMode()
     local_mode_ctx = ExecutionContext(context=exec_mode.local_mode)
-    print(configs)
 
     sim = Executor(exec_context=local_mode_ctx, configs=exp.configs)
     raw_system_events, tensor_field, sessions = sim.execute()
