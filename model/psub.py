@@ -1,11 +1,10 @@
-from ssl import ALERT_DESCRIPTION_BAD_CERTIFICATE_HASH_VALUE
 
 from numpy import s_
 
-from model.parts.assets.asset import s_basket_asset, s_index_asset
-from model.parts.traders.momentum import p_momentum_trade, s_momentum_trade
-from .parts.traders.arbitrage import p_arb_trade, s_arb_trade
-from .parts.assets.asset import s_basket_asset, s_index_asset
+#from model.parts.assets.asset import s_basket_asset, s_index_asset
+#from model.parts.traders.momentum import p_momentum_trade, s_momentum_trade
+#from .parts.traders.arbitrage import p_arb_trade, s_arb_trade
+#from .parts.assets.asset import s_basket_asset, s_index_asset
 
 """
 Partial state update blocks:
@@ -16,29 +15,12 @@ Partial state update blocks:
 """
 
 partial_state_update_block = [
-    {
+{
         'policies': {
+            'test': lambda a,b,c,d: {"A": None}
         },
         'variables': {
-            # TODO: should these be separate?
-            'basket': s_basket_asset,
-            'index': s_index_asset
+            'trades': lambda a,b,c,d,e: ("trades", None)
         }
-    },
-    {
-        'policies': {
-            'arb_trade': p_arb_trade
-        },
-        'variables': {
-            'index': s_arb_trade
-        }
-    },
-    {
-        'policies': {
-            'momentum_trade': p_momentum_trade
-        },
-        'variables': {
-            'index': s_momentum_trade
-        }
-    }
+}
 ]
