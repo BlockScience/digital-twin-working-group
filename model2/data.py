@@ -245,6 +245,8 @@ def format_inputs(inputs: input_data) -> InputDataModel:
     
     starting_state = inputs.starting_state.copy()
     starting_state = map_price(starting_state)
+    starting_state = {"prices": starting_state,
+                 "trades": None}
     
     historical_data = inputs.historical_data.copy()
     historical_data["returns"] = historical_data.apply(lambda x: map_returns(x),axis=1)
