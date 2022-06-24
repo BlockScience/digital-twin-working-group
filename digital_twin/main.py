@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from copy import deepcopy
 
 class DigitalTwin(ABC):
     
@@ -41,8 +42,16 @@ class DigitalTwin(ABC):
         self.input_data_raw = self.data_pipeline.compute_input_data(self.historical_data)
         self.input_data = self.data_pipeline.format_input_data(self.input_data_raw)
     
-    def run_backtest(self):
-        backtest_data = self.backtest_model.run_model(self.input_data)
+    def run_backtest(self, monte_carlo_runs: int, params: dict):
+        input_data = self.input_data.input_data
+        timesteps = len(input_data)
+        params = deepcopy(params)
+        params["input_data"] =  [input_data]
+        initial_state = self.input_data.starting_state
+        
+        exp = self.backtest_model.load_config(monte_carlo_runs, timesteps,
+                                              params, initial_state)
+        backtest_data = self.backtest_model.run_model(exp)
         backtest_data = self.backtest_model.post_processing(backtest_data)
         self.backtest_data = backtest_data
     
