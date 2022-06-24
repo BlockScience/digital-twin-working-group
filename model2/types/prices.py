@@ -1,7 +1,12 @@
 from dataclasses import dataclass
+from pandas import DataFrame
 
 share_price = float
 percentage_return = float
+prices_table_raw = DataFrame
+prices_table_processed = DataFrame
+returns_table_raw = DataFrame
+returns_table_processed = DataFrame
 
 @dataclass
 class Prices():

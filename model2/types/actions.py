@@ -1,6 +1,9 @@
 from dataclasses import dataclass
+from pandas import DataFrame
 
 trade_action = bool
+trade_table_raw = DataFrame
+trade_table_processed = DataFrame
 
 @dataclass
 class Trades():
