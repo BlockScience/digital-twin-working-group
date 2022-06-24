@@ -4,7 +4,7 @@ import pandas as pd
 from .types import (prices_table_raw, prices_table_processed,
                    returns_table_raw, returns_table_processed,
                    trade_table_raw, trade_table_processed,
-                   BacktestData)
+                   BacktestData, InputData)
 
 def create_connection() -> Connection:
     """
@@ -169,3 +169,46 @@ def pull_backtest_data() -> BacktestData:
                         trades_data = trades_data)
     
     return data
+
+def create_input_data(backtest_data: BacktestData) -> InputData:
+    """
+    Take backtest data and turn it into input data
+
+    Parameters
+    ----------
+    backtest_data : BacktestData
+        Backtest data
+
+    Returns
+    -------
+    InputData
+        Input data for use in the model
+
+    """
+    
+    #Grab the relevant data
+    pure_returns_data = backtest_data.pure_returns.copy()
+    prices_data = backtest_data.prices_data.copy()
+    trades_data = backtest_data.trades_data.copy()
+    
+    #Grab the starting state
+    starting_state = prices_data.iloc[0]
+    
+    #Push ahead prices data
+    prices_data = prices_data.iloc[1:]
+    prices_data.index = prices_data.index - 1
+    
+    #Combine data
+    historical_data = pd.concat([pure_returns_data, prices_data, trades_data], axis=1)
+    historical_data[["Arbitrage", "Momentum Buy", "Momentum Sell"]] = historical_data[["Arbitrage", "Momentum Buy", "Momentum Sell"]].fillna(False)
+    
+    #Build input and output data
+    input_data = historical_data[["index_return", "basket_return"]]
+    output_data = historical_data[["index_price", "basket_price", "Arbitrage", "Momentum Buy", "Momentum Sell"]]
+    
+    out = InputData(starting_state = starting_state,
+                    historical_data = historical_data,
+                    input_data = input_data,
+                    output_data = output_data)
+    
+    return out
