@@ -1,4 +1,4 @@
-from model.parts.mechanism.pure_returns import p_decode_return_input_backtest, s_pure_return
+from .mechanism.pure_returns import p_decode_return_input_backtest, s_pure_return
 
 
 price_update_block_backtest = {

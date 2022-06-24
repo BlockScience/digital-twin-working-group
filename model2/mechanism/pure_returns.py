@@ -1,4 +1,4 @@
-from .types import Prices
+from model2.types import Prices
     
 def p_decode_return_input_backtest(_params, substep, sH, s):
     
