@@ -1,9 +1,10 @@
 import sqlite3
 from sqlite3 import Connection
 import pandas as pd
-from types import (prices_table_raw, prices_table_processed,
+from .types import (prices_table_raw, prices_table_processed,
                    returns_table_raw, returns_table_processed,
-                   trade_table_raw, trade_table_processed)
+                   trade_table_raw, trade_table_processed,
+                   BacktestData)
 
 def create_connection() -> Connection:
     """
@@ -137,3 +138,34 @@ def process_trades(trades_data: trade_table_raw) -> trade_table_processed:
     trades_data = trades_data.fillna(False)
     
     return trades_data
+
+def pull_backtest_data() -> BacktestData:
+    """
+    Does the aggregate data pull for pulling backtest data
+
+    Returns
+    -------
+    BacktestData
+        The data used for backtesting the model
+
+    """
+    
+    #Connect to database
+    con = create_connection()
+    
+    #Raw data pulls
+    pure_returns_data = pull_pure_returns(con)
+    prices_data = pull_prices(con)
+    trades_data = pull_trades(con)
+    
+    #Data processing
+    pure_returns_data = process_pure_returns(pure_returns_data)
+    prices_data = process_prices(prices_data)
+    trades_data = process_trades(trades_data)
+    
+    #Create backtest data object
+    data = BacktestData(pure_returns = pure_returns_data, 
+                        prices_data = prices_data,
+                        trades_data = trades_data)
+    
+    return data

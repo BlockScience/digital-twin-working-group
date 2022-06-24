@@ -4,3 +4,4 @@ from .prices import (share_price, percentage_return,
                     returns_table_processed)
 from .actions import (trade_action, Trades,
                       trade_table_raw, trade_table_processed)
+from .backtest import BacktestData
