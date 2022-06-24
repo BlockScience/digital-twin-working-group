@@ -5,3 +5,4 @@ from .prices import (share_price, percentage_return,
 from .actions import (trade_action, Trades,
                       trade_table_raw, trade_table_processed)
 from .backtest import BacktestData, InputData, input_data, InputDataModel, model_starting_state
+from .runs import raw_results, processed_results
