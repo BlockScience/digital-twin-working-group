@@ -1,11 +1,15 @@
 from dataclasses import dataclass
-from .prices import prices_table_processed, returns_table_processed
+from .prices import prices_table_processed, returns_table_processed, Prices
 from .actions import trade_table_processed
 from pandas import DataFrame
 
 historical_data = DataFrame
 input_data = DataFrame
 output_data = DataFrame
+
+historical_data_model = DataFrame
+input_data_model = DataFrame
+output_data_model = DataFrame
 
 @dataclass
 class BacktestData():
@@ -19,3 +23,10 @@ class InputData():
     historical_data: historical_data
     input_data: input_data
     output_data: output_data
+    
+@dataclass
+class InputDataModel():
+    starting_state: Prices
+    historical_data: historical_data_model
+    input_data: input_data_model
+    output_data: output_data_model
