@@ -56,7 +56,8 @@ class DigitalTwin(ABC):
         self.backtest_data = backtest_data
     
     def fit_stochastic_fit(self):
-        self.stochastic_fit_params = self.stochastic_fit.fit_data(self.input_data)
+        self.stochastic_fit_params = self.stochastic_fit.fit_data(self.input_data,
+                                                                  self.historical_data)
     
     def extrapolate_signals(self):
         self.signals = self.signal_extrapolation.extrapolate_signals(self.stochastic_fit_params, self.extrapolation_epochs)
