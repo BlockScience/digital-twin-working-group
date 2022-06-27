@@ -24,7 +24,7 @@ def p_momentum_trade(_params, substep, sH, s):
     index_price = prices.index_price
     t = s["timestep"]
     lookback = _params["lookback"]
-    lookback_i = max(t - lookback + 1, 0)
+    lookback_i = max(t - lookback, 0)
 
     past_index_price = sH[lookback_i][-1]["prices"].index_price
     theta2 = _params["theta2"]
