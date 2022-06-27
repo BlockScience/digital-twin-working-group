@@ -9,6 +9,7 @@ class StochasticFit(ABC):
         # Go through each param and get the stochastic fit
         for param in self.params:
             self.fit_param(param, input_data, historical_data)
+        return self.params
         
     @abstractmethod
     def fit_param(self, param, input_data, historical_data):
