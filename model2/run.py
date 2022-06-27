@@ -130,5 +130,11 @@ def post_processing(df: raw_results) -> processed_results:
         Processed results
 
     """
+    #Get only the last timestep
+    df = df.groupby(["simulation", "subset", "run", "timestep"]).last().reset_index()
+    
+    #Pull out index price and basket price for ease of use
+    df["index_price"] = df["prices"].apply(lambda x: x.index_price)
+    df["basket_price"] = df["prices"].apply(lambda x: x.basket_price)
     
     return df
