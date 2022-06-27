@@ -8,7 +8,10 @@ def p_decode_return_input_backtest(_params, substep, sH, s):
     return {"returns": returns}
 
 def p_decode_return_input_extrapolation(_params, substep, sH, s):
-    pass
+    t = s["timestep"]
+    returns = _params["input_data"][t]["returns"]
+
+    return {"returns": returns}
 
 
 def s_pure_return(_params, substep, sH, s, _input):

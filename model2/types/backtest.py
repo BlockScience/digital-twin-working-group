@@ -27,10 +27,12 @@ class InputData():
     historical_data: historical_data
     input_data: input_data
     output_data: output_data
+    ending_state: prices_table_processed
     
 @dataclass
 class InputDataModel():
     starting_state: model_starting_state
+    ending_state: model_starting_state
     historical_data: historical_data_model
     input_data: input_data_model
     output_data: output_data_model

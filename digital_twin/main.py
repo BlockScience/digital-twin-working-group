@@ -69,8 +69,16 @@ class DigitalTwin(ABC):
     def extrapolate_signals(self):
         self.signals_raw = self.signal_extrapolation.extrapolate_signals(self.stochastic_fit_params, self.extrapolation_epochs)
         self.signals = self.process_signals(self.stochastic_fit_params, self.signals_raw)
-    def run_extrapolation(self):
-        extrapolation_data = self.extrapolation_model.run_model(self.signals, self.historical_data)
+    
+    def run_extrapolation(self, monte_carlo_runs: int, params: dict):
+        initial_state = self.input_data.input_data.ending_state
+        timesteps = self.extrapolation_epochs
+        params = deepcopy(params)
+        params["input_data"] =  self.signals
+        
+        exp = self.extrapolation_model.load_config(monte_carlo_runs, timesteps,
+                                              params, initial_state)
+        extrapolation_data = self.extrapolation_model.run_model(exp)
         extrapolation_data = self.extrapolation_model.post_processing(extrapolation_data)
         self.extrapolation_data = extrapolation_data
     

@@ -195,6 +195,9 @@ def create_input_data(backtest_data: BacktestData) -> InputData:
     #Grab the starting state
     starting_state = prices_data.iloc[0]
     
+    #Grab the ending state
+    ending_state = prices_data.iloc[-1]
+    
     #Push ahead prices data
     prices_data = prices_data.iloc[1:]
     prices_data.index = prices_data.index - 1
@@ -210,6 +213,7 @@ def create_input_data(backtest_data: BacktestData) -> InputData:
     out = InputData(starting_state = starting_state,
                     historical_data = historical_data,
                     input_data = input_data,
+                    ending_state = ending_state,
                     output_data = output_data)
     
     return out
@@ -248,6 +252,12 @@ def format_inputs(inputs: input_data) -> InputDataModel:
     starting_state = {"prices": starting_state,
                  "trades": None}
     
+    
+    ending_state = inputs.ending_state.copy()
+    ending_state = map_price(ending_state)
+    ending_state = {"prices": ending_state,
+                 "trades": None}
+    
     historical_data = inputs.historical_data.copy()
     historical_data["returns"] = historical_data.apply(lambda x: map_returns(x),axis=1)
     historical_data["prices"] = historical_data.apply(lambda x: map_price(x),axis=1)
@@ -266,6 +276,7 @@ def format_inputs(inputs: input_data) -> InputDataModel:
     model_data = InputDataModel(starting_state = starting_state,
                     historical_data = historical_data,
                     input_data = input_data,
-                    output_data = output_data)
+                    output_data = output_data,
+                    ending_state = ending_state)
     
     return model_data
