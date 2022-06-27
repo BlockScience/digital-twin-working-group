@@ -1,9 +1,18 @@
-from model2.types import Trades, trade_action
+from model2.types import Trades
+from model2.behavioral.trades import arbitrage_decision
+from model2.policy.trades import price_impact_arbitrage
 
 def p_arbitrage_trade(_params, substep, sH, s):
     #Current prices
     prices = s["prices"]
-    arbitrage_trade = False
+    basket_price = prices.basket_price
+    index_price = prices.index_price
+    theta1 = _params["theta1"]
+    
+    arbitrage_trade = arbitrage_decision(basket_price, index_price, theta1)
+    
+    if arbitrage_trade:
+        prices = price_impact_arbitrage(basket_price, index_price)
     
     return {"new_prices": prices,
             "arbitrage_trade": arbitrage_trade}
