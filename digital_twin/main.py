@@ -58,10 +58,14 @@ class DigitalTwin(ABC):
     def fit_stochastic_fit(self):
         self.stochastic_fit_params = self.stochastic_fit.fit_data(self.input_data,
                                                                   self.historical_data)
+
+    def process_signals(self, params, signals_raw):
+        signals = []
+        return signals
     
     def extrapolate_signals(self):
-        self.signals = self.signal_extrapolation.extrapolate_signals(self.stochastic_fit_params, self.extrapolation_epochs)
-    
+        self.signals_raw = self.signal_extrapolation.extrapolate_signals(self.stochastic_fit_params, self.extrapolation_epochs)
+        self.signals = self.process_signals(self.stochastic_fit_params, self.signals_raw)
     def run_extrapolation(self):
         extrapolation_data = self.extrapolation_model.run_model(self.signals, self.historical_data)
         extrapolation_data = self.extrapolation_model.post_processing(extrapolation_data)
