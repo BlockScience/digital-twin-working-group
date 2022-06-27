@@ -37,6 +37,7 @@ class DigitalTwin(ABC):
     @abstractmethod
     def load_data_prior(self):
         pass
+
     
     def compute_input_data(self):
         self.input_data_raw = self.data_pipeline.compute_input_data(self.historical_data)
@@ -61,6 +62,8 @@ class DigitalTwin(ABC):
 
     def process_signals(self, params, signals_raw):
         signals = []
+        for p, s in zip(params, signals_raw):
+            signals.extend(self.signal_extrapolation.process_signal(p, s))
         return signals
     
     def extrapolate_signals(self):
