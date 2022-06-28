@@ -9,6 +9,10 @@ class ReportingModule(ABC):
     @abstractmethod
     def mse_backtest_difference(self, historical_data, backtest_data):
         pass
+
+    @abstractmethod
+    def save_backtest(self, backtest_data):
+        pass
     
     def create_backtest_report(self, historical_data, backtest_data):
         pass

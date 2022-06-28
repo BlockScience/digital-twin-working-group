@@ -81,4 +81,14 @@ class DigitalTwin(ABC):
         extrapolation_data = self.extrapolation_model.run_model(exp)
         extrapolation_data = self.extrapolation_model.post_processing(extrapolation_data)
         self.extrapolation_data = extrapolation_data
-    
+
+    def graph_backtest_difference(self):
+        self.reporting_module.graph_backtest_difference(self.historical_data,
+                                                        self.backtest_data)
+
+    def mse_backtest_difference(self):
+        return self.reporting_module.mse_backtest_difference(self.historical_data,
+                                                        self.backtest_data)
+
+    def save_backtest(self):
+        self.reporting_module.save_backtest(self.backtest_data)
