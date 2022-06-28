@@ -92,3 +92,6 @@ class DigitalTwin(ABC):
 
     def save_backtest(self):
         self.reporting_module.save_backtest(self.backtest_data)
+
+    def create_backtest_reports(self):
+        pass
