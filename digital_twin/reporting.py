@@ -14,5 +14,5 @@ class ReportingModule(ABC):
     def save_backtest(self, backtest_data):
         pass
     
-    def create_backtest_report(self, historical_data, backtest_data):
+    def create_backtest_report(self, backtest_template):
         pass
